@@ -976,6 +976,18 @@ services
   line-height: 50px;
 }
 
+/* Add at the end of the CSS file */
+.fade-out {
+  opacity: 0.3;
+  transition: opacity 0.8s ease-out;
+  color: #191a20;
+}
+
+body {
+  opacity: 1;
+  transition: opacity 0.8s ease-in;
+}
+
 
 /*
 ---------------------------------------------

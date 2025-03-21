@@ -355,6 +355,30 @@ https://templatemo.com/tm-569-edu-meeting
     $(window).scroll(function () {
       checkSection();
     });
+
+    // Add page transition handling
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all navigation links that lead to other pages
+        const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
+        
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const destination = this.href;
+                
+                document.body.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 500); // Match this with the CSS transition duration
+            });
+        });
+    });
+    
+    // Remove fade-out class when page loads
+    window.onload = function() {
+        document.body.classList.remove('fade-out');
+    };
   </script>
 </body>
 
