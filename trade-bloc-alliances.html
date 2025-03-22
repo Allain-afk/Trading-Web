@@ -53,11 +53,10 @@ https://templatemo.com/tm-569-edu-meeting
                   <li><a href="product-export.html">Export</a></li>
                   <li><a href="product-import.html">Import</a></li>
                   <li><a href="bank.html">Bank</a></li>
-
                 </ul>
               </li>
-              <li><a href="trade-bloc-alliances.html" class="active">Alliances</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="trade-bloc-alliances.html">Alliances</a></li>
+              <li><a href="references.html">References</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -247,27 +246,27 @@ https://templatemo.com/tm-569-edu-meeting
     });
 
     // Add page transition handling
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all navigation links that lead to other pages
-        const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
-        
-        links.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const destination = this.href;
-                
-                document.body.classList.add('fade-out');
-                
-                setTimeout(() => {
-                    window.location.href = destination;
-                }, 500); // Match this with the CSS transition duration
-            });
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get all navigation links that lead to other pages
+      const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
+
+      links.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const destination = this.href;
+
+          document.body.classList.add('fade-out');
+
+          setTimeout(() => {
+            window.location.href = destination;
+          }, 500); // Match this with the CSS transition duration
         });
+      });
     });
-    
+
     // Remove fade-out class when page loads
-    window.onload = function() {
-        document.body.classList.remove('fade-out');
+    window.onload = function () {
+      document.body.classList.remove('fade-out');
     };
   </script>
 </body>

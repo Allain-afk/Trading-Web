@@ -56,7 +56,7 @@ https://templatemo.com/tm-569-edu-meeting
                 </ul>
               </li>
               <li><a href="trade-bloc-alliances.html">Alliances</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="references.html">References</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -91,11 +91,16 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
                 <div class="down-content">
                   <p class="description">
-                    <b>With more than $200 billion of total assets and $20 billion of annual profit, Maybank is unquestionably the biggest bank in Malaysia.</b><br>
-                    <li>In terms of deposits, assets, and pretty much every other indicator, Maybank is the top and biggest bank in Malaysia.</li><br>
-                    <li>Maybank’s adaptability and dedication to a wide range of customers are two of its most important advantages. Maybank provides almost every kind of service and can accommodate any size business with its extensive array of personal and business banking options. 
+                    <b>With more than $200 billion of total assets and $20 billion of annual profit, Maybank is
+                      unquestionably the biggest bank in Malaysia.</b><br>
+                    <li>In terms of deposits, assets, and pretty much every other indicator, Maybank is the top and
+                      biggest bank in Malaysia.</li><br>
+                    <li>Maybank’s adaptability and dedication to a wide range of customers are two of its most important
+                      advantages. Maybank provides almost every kind of service and can accommodate any size business
+                      with its extensive array of personal and business banking options.
                     </li><br>
-                    <li>Through its community initiatives and Islamic banking methods, Maybank supports Malaysia’s economic expansion and development in addition to its main banking services.</li><br>
+                    <li>Through its community initiatives and Islamic banking methods, Maybank supports Malaysia’s
+                      economic expansion and development in addition to its main banking services.</li><br>
                 </div>
               </div>
             </div>
@@ -179,27 +184,27 @@ https://templatemo.com/tm-569-edu-meeting
     });
 
     // Add page transition handling
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all navigation links that lead to other pages
-        const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
-        
-        links.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const destination = this.href;
-                
-                document.body.classList.add('fade-out');
-                
-                setTimeout(() => {
-                    window.location.href = destination;
-                }, 500); // Match this with the CSS transition duration
-            });
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get all navigation links that lead to other pages
+      const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
+
+      links.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const destination = this.href;
+
+          document.body.classList.add('fade-out');
+
+          setTimeout(() => {
+            window.location.href = destination;
+          }, 500); // Match this with the CSS transition duration
         });
+      });
     });
-    
+
     // Remove fade-out class when page loads
-    window.onload = function() {
-        document.body.classList.remove('fade-out');
+    window.onload = function () {
+      document.body.classList.remove('fade-out');
     };
   </script>
 </body>
