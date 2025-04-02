@@ -1,6 +1,6 @@
 let cart = [];
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Add to cart functionality
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     const cartIcon = document.getElementById('cart-icon');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const checkoutBtn = document.getElementById('checkout-btn');
 
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const productId = this.dataset.id;
             const productName = this.dataset.name;
             const price = parseFloat(this.dataset.price);
@@ -41,10 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Your cart is empty!');
             return;
         }
+        generateReceipt();
         alert('Thank you for your order!');
         cart = [];
         updateCartDisplay();
-        
+
         // Smooth exit for cart overlay
         cartOverlay.classList.remove('show');
         setTimeout(() => {
@@ -57,17 +58,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function addToCart(id, name, price, quantity) {
     const existingItem = cart.find(item => item.id === id);
-    
+
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
         cart.push({ id, name, price, quantity });
     }
-    
+
     // Show notification
     const notification = document.getElementById('notification');
     notification.classList.add('show');
-    
+
     // Hide notification after 2 seconds
     setTimeout(() => {
         notification.classList.remove('show');
@@ -90,9 +91,9 @@ function updateCartDisplay() {
                     <p>Quantity: ${item.quantity}</p>
                 </div>
                 <div>$${(item.price * item.quantity).toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                })}</div>
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        })}</div>
             </div>
         `;
     });
@@ -115,17 +116,17 @@ function initModalHandling() {
     const closeButtons = document.querySelectorAll('.modal-close');
 
     triggers.forEach(trigger => {
-        trigger.addEventListener('click', function(e) {
+        trigger.addEventListener('click', function (e) {
             e.preventDefault();
             const productId = this.getAttribute('data-product');
             const modal = document.getElementById(productId + 'Modal');
-            
+
             // First display the modal with opacity 0
             modal.style.display = 'flex';
-            
+
             // Force reflow
             modal.offsetHeight;
-            
+
             // Add show class for transition
             modal.classList.add('show');
         });
@@ -136,7 +137,7 @@ function initModalHandling() {
     });
 
     modals.forEach(modal => {
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === this) {
                 closeModal.call(this);
             }
@@ -147,9 +148,76 @@ function initModalHandling() {
 function closeModal() {
     const modal = this.closest('.modal');
     modal.classList.remove('show');
-    
+
     // Wait for transition to complete before hiding
     setTimeout(() => {
         modal.style.display = 'none';
     }, 300); // Match this with CSS transition duration
 }
+
+// Function to generate the receipt PDF
+function generateReceipt() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add receipt header
+    doc.setFontSize(20);
+    doc.text('Jackmar Trading', 105, 20, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text('Order Receipt', 105, 30, { align: 'center' });
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 105, 40, { align: 'center' });
+
+    // Prepare table data
+    const tableColumn = ['Item', 'Quantity', 'Price', 'Total'];
+    const tableRows = [];
+    let grandTotal = 0;
+
+    cart.forEach(item => {
+        const total = item.price * item.quantity;
+        grandTotal += total;
+        tableRows.push([
+            item.name,
+            item.quantity,
+            `$${item.price.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })}`,
+            `$${total.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })}`
+        ]);
+    });
+
+    // Add items table
+    doc.autoTable({
+        head: [tableColumn],
+        body: tableRows,
+        startY: 50,
+        theme: 'grid',
+        headStyles: {
+            fillColor: [245, 164, 37],
+            textColor: [255, 255, 255]
+        },
+        styles: {
+            halign: 'center'
+        }
+    });
+
+    // Add total
+    const finalY = doc.lastAutoTable.finalY || 50;
+    doc.setFontSize(14);
+    doc.text(`Grand Total: $${grandTotal.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    })}`, 105, finalY + 20, { align: 'center' });
+
+    // Add footer
+    doc.setFontSize(10);
+    doc.text('Thank you for your business!', 105, finalY + 30, { align: 'center' });
+    doc.text('For any inquiries, please contact support@jackmartrading.com', 105, finalY + 35, { align: 'center' });
+
+    // Save the PDF
+    doc.save(`JackmarTrading_Receipt_${new Date().toISOString().slice(0, 10)}.pdf`);
+}
+
