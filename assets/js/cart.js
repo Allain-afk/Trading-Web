@@ -82,18 +82,19 @@ function updateCartDisplay() {
     let total = 0;
 
     cartItems.innerHTML = '';
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
         total += item.price * item.quantity;
         cartItems.innerHTML += `
             <div class="cart-item">
-                <div>
+                <div class="cart-item-info">
                     <h4>${item.name}</h4>
                     <p>Quantity: ${item.quantity}</p>
-                </div>
-                <div>$${(item.price * item.quantity).toLocaleString('en-US', {
+                    <p>$${(item.price * item.quantity).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
-        })}</div>
+        })}</p>
+                </div>
+                <button class="remove-item" data-index="${index}">×</button>
             </div>
         `;
     });
@@ -103,6 +104,19 @@ function updateCartDisplay() {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     });
+
+    // Add event listeners for remove buttons
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', function () {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeFromCart(index);
+        });
+    });
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartDisplay();
 }
 
 // Initialize modal handling for product images
